@@ -61,11 +61,10 @@ class FetchFromApi extends Command
                         return;
                     }
 
-                    // precisa ajustar a lógica de criar / atualizar
                     collect($item['fotos'])->map(
                         function ($image) use ($listing) {
-                        $listing->images()->create(['url' => $image]);
-                    }
+                            $listing->images()->firstOrCreate(['url' => $image]);
+                        }
                     );
                 } catch (ValidationException $e) {
                     Log::error("Erro de validação para o item com ID {$item['id']}: " . json_encode($e->errors()));
