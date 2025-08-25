@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->string("type");
+            $table->string("type"); // poderia ser um enum
             $table->string("brand");
             $table->string("model");
             $table->string("version")->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration {
             $table->decimal("price", 10, 2);
             $table->decimal("old_price", 10, 2)->nullable();
             $table->string("color");
-            $table->string("fuel");
+            $table->string("fuel"); // poderia ser um enum
         });
     }
 

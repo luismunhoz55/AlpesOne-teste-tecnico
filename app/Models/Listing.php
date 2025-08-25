@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Listing extends Model
+{
+    /** @use HasFactory<\Database\Factories\ListingFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        "type",
+        "brand",
+        "model",
+        "version",
+        "year_model",
+        "year_build",
+        "optionals",
+        "doors",
+        "board",
+        "chassi",
+        "transmission",
+        "km",
+        "description",
+        "created",
+        "updated",
+        "sold",
+        "category",
+        "url_car",
+        "price",
+        "old_price",
+        "color",
+        "fuel",
+    ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
+}
