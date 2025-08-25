@@ -16,8 +16,8 @@ return new class extends Migration {
             $table->string("brand");
             $table->string("model");
             $table->string("version")->nullable();
-            $table->string("year_model");
-            $table->string("year_build");
+            $table->integer("year_model")->nullable();
+            $table->integer("year_build")->nullable();
             $table->json("optionals")->nullable();
             $table->integer("doors");
             $table->string("board");

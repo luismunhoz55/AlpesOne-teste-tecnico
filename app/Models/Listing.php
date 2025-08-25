@@ -12,6 +12,7 @@ class Listing extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         "type",
         "brand",
         "model",
@@ -35,6 +36,14 @@ class Listing extends Model
         "color",
         "fuel",
     ];
+
+    protected $casts = [
+        'created' => 'datetime',
+        'updated' => 'datetime',
+        'sold' => 'boolean'
+    ];
+
+    public $timestamps = false;
 
     public function images(): HasMany
     {
