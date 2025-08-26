@@ -4,9 +4,9 @@ name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - master
+      - main
 
-# Define as variáveis de ambiente secretas
+# Define as variáveis de ambiente
 env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checa o seu código do repositório
+      # Checa o código do repositório
       - name: Checkout code
         uses: actions/checkout@v3
 
