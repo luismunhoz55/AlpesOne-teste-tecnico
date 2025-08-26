@@ -13,7 +13,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        return Listing::with('images')->get();
+        return Listing::with('images')->paginate(20);
     }
 
     /**
