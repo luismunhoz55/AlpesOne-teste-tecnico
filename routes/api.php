@@ -3,4 +3,4 @@
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('listings', ListingController::class);
+Route::apiResource('listings', ListingController::class)->except(['create', 'edit']);
