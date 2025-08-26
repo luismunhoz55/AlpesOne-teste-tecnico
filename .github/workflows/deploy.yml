@@ -1,0 +1,49 @@
+name: Deploy to AWS EC2
+
+# Este workflow será executado quando houver um push para a branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Define as variáveis de ambiente secretas
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_USER: ${{ secrets.EC2_USER }}
+
+jobs:
+  deploy:
+    # O job irá rodar em um ambiente Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checa o seu código do repositório
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Instala o SSH e prepara a chave privada para conexão
+      - name: Install SSH and prepare private key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+
+      # Executa os comandos de deploy na instância EC2
+      - name: Run deploy commands
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+            cd /var/www/AlpesOne-teste-tecnico
+            git pull origin main
+
+            composer install --no-dev --optimize-autoloader
+            
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+            
+            php artisan migrate --force
+
+            sudo systemctl restart php8.3-fpm
+          EOF
