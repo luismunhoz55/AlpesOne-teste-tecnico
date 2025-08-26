@@ -67,7 +67,7 @@ class FetchFromApi extends Command
                         }
                     );
                 } catch (ValidationException $e) {
-                    Log::error("Erro de validação para o item com ID {$item['id']}: " . json_encode($e->errors()));
+                    Log::error("Erro de validação: " . json_encode($e->errors()));
                 }
             });
     }
