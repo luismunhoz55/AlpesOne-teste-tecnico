@@ -30,20 +30,28 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
 
-      # Executa os comandos de deploy na instância EC2
+            # Executa os comandos de deploy na instância EC2
       - name: Run deploy commands
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
+            # Navega para o diretório do projeto
             cd /var/www/AlpesOne-teste-tecnico
-            git pull origin main
 
+            # Puxa todas as atualizações e força o reset da branch para garantir que o código local corresponda ao remoto
+            git fetch origin
+            git reset --hard origin/main
+
+            # Instala as dependências de produção e otimiza o autoloader
             composer install --no-dev --optimize-autoloader
-            
+
+            # Limpa e gera os arquivos de cache
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
             
+            # Roda as migrações do banco de dados (o --force é para evitar confirmação em produção)
             php artisan migrate --force
 
+            # Reinicia o serviço do PHP-FPM para aplicar as mudanças
             sudo systemctl restart php8.3-fpm
           EOF
