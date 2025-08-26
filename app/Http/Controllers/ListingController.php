@@ -65,7 +65,7 @@ class ListingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the Listing from storage.
      */
     public function destroy(Listing $listing)
     {
