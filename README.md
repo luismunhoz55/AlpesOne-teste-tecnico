@@ -156,6 +156,7 @@ Algumas decisões que tive que tomar durante o decorrer do projeto
 - Não utilizei padrões de projeto como Services / Repositories porque nesse caso eu não tinha regras de negócio e nem requisitos mais complexos, então apenas os Controllers com os Form requests já resolveram o problema.
 - Optei pelo banco de dados SQLite pois diminui a complexidade do teste técnico em todas as etapas, desde a configuração local até o deploy em produção.
 - Alguns campos poderiam ser unique, como a placa e a URL do veículo, se os requisitos pedissem.
+- Fiquei um pouco confuso se as rotas deveriam ser protegidas por autenticação ou serem totalmente públicas, então deixei elas públicas
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
 
