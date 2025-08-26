@@ -21,7 +21,6 @@ class StoreAndUpdateListingRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'type' => ['required', 'string'],
             'brand' => ['required', 'string'],

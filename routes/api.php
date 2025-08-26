@@ -1,9 +1,6 @@
 <?php
 
-use App\Models\Listing;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/listings', function () {
-    return Listing::with('images')->get();
-});
+Route::apiResource('listings', ListingController::class);

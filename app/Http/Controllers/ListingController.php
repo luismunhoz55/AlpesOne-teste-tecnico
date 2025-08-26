@@ -13,7 +13,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        //
+        return Listing::with('images')->get();
     }
 
     /**
@@ -29,7 +29,11 @@ class ListingController extends Controller
      */
     public function store(StoreListingRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $listing = Listing::create($validated);
+
+        return response()->json(['success' => true, 'listing' => $listing], 201);
     }
 
     /**
@@ -37,7 +41,7 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        //
+        return $listing->load('images');
     }
 
     /**
@@ -53,7 +57,11 @@ class ListingController extends Controller
      */
     public function update(UpdateListingRequest $request, Listing $listing)
     {
-        //
+        $validated = $request->validated();
+
+        $listing->update($validated);
+
+        return response()->json(['success' => true, 'listing' => $listing]);
     }
 
     /**
@@ -61,6 +69,8 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
+
+        return response()->noContent();
     }
 }
