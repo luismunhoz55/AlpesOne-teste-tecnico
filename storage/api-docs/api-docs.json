@@ -1,0 +1,450 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Alpes One Technical Test API",
+        "description": "API para gerenciar dados do recurso 'listing'.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "URL base da API"
+        }
+    ],
+    "paths": {
+        "/listings": {
+            "get": {
+                "tags": [
+                    "Listings"
+                ],
+                "summary": "Listagem paginada de todos os anúncios.",
+                "operationId": "getListingsList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Listings"
+                ],
+                "summary": "Cria um novo anúncio.",
+                "operationId": "storeListing",
+                "requestBody": {
+                    "description": "Dados do anúncio a ser criado",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "brand",
+                                    "model",
+                                    "doors",
+                                    "board",
+                                    "transmission",
+                                    "km",
+                                    "created",
+                                    "updated",
+                                    "sold",
+                                    "category",
+                                    "url_car",
+                                    "price",
+                                    "color",
+                                    "fuel"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Carro"
+                                    },
+                                    "brand": {
+                                        "type": "string",
+                                        "example": "Honda"
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "example": "Civic"
+                                    },
+                                    "version": {
+                                        "type": "string",
+                                        "example": "EXL 2.0",
+                                        "nullable": true
+                                    },
+                                    "year_model": {
+                                        "type": "integer",
+                                        "example": 2023,
+                                        "nullable": true
+                                    },
+                                    "year_build": {
+                                        "type": "integer",
+                                        "example": 2022,
+                                        "nullable": true
+                                    },
+                                    "optionals": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "doors": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "board": {
+                                        "type": "string",
+                                        "example": "ABC-1234"
+                                    },
+                                    "chassi": {
+                                        "type": "string",
+                                        "example": "1234567890ABCDEF",
+                                        "nullable": true
+                                    },
+                                    "transmission": {
+                                        "type": "string",
+                                        "example": "Automática"
+                                    },
+                                    "km": {
+                                        "type": "integer",
+                                        "example": 25000
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Veículo em ótimo estado de conservação.",
+                                        "nullable": true
+                                    },
+                                    "created": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-15"
+                                    },
+                                    "updated": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-20"
+                                    },
+                                    "sold": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "SUV"
+                                    },
+                                    "url_car": {
+                                        "type": "string",
+                                        "example": "http://example.com/carro-1"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 120000
+                                    },
+                                    "old_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 125000,
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Preto"
+                                    },
+                                    "fuel": {
+                                        "type": "string",
+                                        "example": "Gasolina"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Anúncio criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "listing": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/listings/{listing}": {
+            "get": {
+                "tags": [
+                    "Listings"
+                ],
+                "summary": "Retorna um único anúncio.",
+                "operationId": "getListingById",
+                "parameters": [
+                    {
+                        "name": "listing",
+                        "in": "path",
+                        "description": "ID do anúncio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Anúncio não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Listings"
+                ],
+                "summary": "Atualiza um anúncio existente.",
+                "operationId": "updateListing",
+                "parameters": [
+                    {
+                        "name": "listing",
+                        "in": "path",
+                        "description": "ID do anúncio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados do anúncio a ser atualizado. Note: todos os campos são opcionais.",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Carro"
+                                    },
+                                    "brand": {
+                                        "type": "string",
+                                        "example": "Honda"
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "example": "Civic"
+                                    },
+                                    "version": {
+                                        "type": "string",
+                                        "example": "EXL 2.0",
+                                        "nullable": true
+                                    },
+                                    "year_model": {
+                                        "type": "integer",
+                                        "example": 2023,
+                                        "nullable": true
+                                    },
+                                    "year_build": {
+                                        "type": "integer",
+                                        "example": 2022,
+                                        "nullable": true
+                                    },
+                                    "optionals": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "doors": {
+                                        "type": "integer",
+                                        "example": 4
+                                    },
+                                    "board": {
+                                        "type": "string",
+                                        "example": "ABC-1234"
+                                    },
+                                    "chassi": {
+                                        "type": "string",
+                                        "example": "1234567890ABCDEF",
+                                        "nullable": true
+                                    },
+                                    "transmission": {
+                                        "type": "string",
+                                        "example": "Automática"
+                                    },
+                                    "km": {
+                                        "type": "integer",
+                                        "example": 25000
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Veículo em ótimo estado de conservação.",
+                                        "nullable": true
+                                    },
+                                    "created": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-15"
+                                    },
+                                    "updated": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-01-20"
+                                    },
+                                    "sold": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "SUV"
+                                    },
+                                    "url_car": {
+                                        "type": "string",
+                                        "example": "http://example.com/carro-1"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 120000
+                                    },
+                                    "old_price": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 125000,
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Preto"
+                                    },
+                                    "fuel": {
+                                        "type": "string",
+                                        "example": "Gasolina"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Anúncio atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "listing": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Anúncio não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Listings"
+                ],
+                "summary": "Remove um anúncio.",
+                "operationId": "deleteListing",
+                "parameters": [
+                    {
+                        "name": "listing",
+                        "in": "path",
+                        "description": "ID do anúncio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Anúncio removido com sucesso"
+                    },
+                    "404": {
+                        "description": "Anúncio não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Listings",
+            "description": "Listings"
+        }
+    ]
+}
