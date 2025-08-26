@@ -48,7 +48,7 @@ A aplicação foi construída utilizando o framework **Laravel** e um banco de d
 As funcionalidades principais incluem: 
 - Um comando Artisan que baixa e processa dados de um endpoint JSON. Ele valida e insere os dados no banco, atualizando itens existentes.
 - Uma rotina agendada para verificar e aplicar atualizações no banco de dados a cada hora, caso o JSON original tenha sido alterado. 
-- Uma **API RESTful** completa que permite operações de **CRUD** sobre a base de dados.
+- Uma **API RESTful** completa que permite operações de **CRUD** sobre a base de dados, com [documentação](https://luis-munhoz.space/api/documentation) Swagger.
 - Testes automatizados foram implementados para garantir a qualidade e o funcionamento correto da aplicação.
 - A infraestrutura foi configurada na AWS, utilizando uma instância **EC2** para hospedar a aplicação.
 - Um script de deploy foi criado para automatizar a cópia dos arquivos de código e a reinicialização do servidor. Adicionalmente, foi configurado um pipeline de **CI/CD** para automatizar o deploy a cada *push* para a *branch* `main`.
