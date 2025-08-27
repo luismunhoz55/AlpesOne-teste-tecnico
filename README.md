@@ -154,8 +154,9 @@ php artisan test
 Algumas decisões que tive que tomar durante o decorrer do projeto
 
 - Não utilizei padrões de projeto como Services / Repositories porque nesse caso eu não tinha regras de negócio e nem requisitos mais complexos, então apenas os Controllers com os Form requests já resolveram o problema.
+- O jeito que eu entendi o modelo do banco de dados foi o seguinte: 2 tabelas - Anúncios (Listings), e Imagens (Images), com uma relação **Listing -> has many -> Images**
 - Optei pelo banco de dados SQLite pois diminui a complexidade do teste técnico em todas as etapas, desde a configuração local até o deploy em produção.
-- Alguns campos poderiam ser unique, como a placa e a URL do veículo, se os requisitos pedissem.
+- Alguns campos poderiam ser unique, como a placa e a URL do veículo, e outros poderiam ser um Enum, como o tipo do veículo, e o tipo do combustível.
 - Fiquei um pouco confuso se as rotas deveriam ser protegidas por autenticação ou serem totalmente públicas, então deixei elas públicas
 
 <p align="right">(<a href="#readme-top">Voltar para o topo</a>)</p>
