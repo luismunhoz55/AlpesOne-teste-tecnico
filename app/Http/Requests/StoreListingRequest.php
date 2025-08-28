@@ -45,6 +45,7 @@ class StoreListingRequest extends FormRequest
             'old_price' => ['nullable', 'numeric', 'min:0'],
             'color' => ['required', 'string'],
             'fuel' => ['required', 'string'],
+            'fotos' => ['nullable', 'array']
         ];
     }
 }

@@ -40,7 +40,8 @@ class Listing extends Model
     protected $casts = [
         'created' => 'datetime',
         'updated' => 'datetime',
-        'sold' => 'boolean'
+        'sold' => 'boolean',
+        'optionals' => 'array',
     ];
 
     public $timestamps = false;
