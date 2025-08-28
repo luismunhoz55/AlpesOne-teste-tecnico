@@ -88,6 +88,7 @@ class ListingController extends Controller
      * @OA\Property(property="old_price", type="number", format="float", nullable=true, example=125000.00),
      * @OA\Property(property="color", type="string", example="Preto"),
      * @OA\Property(property="fuel", type="string", example="Gasolina"),
+     * @OA\Property(property="fotos", type="array", @OA\Items(type="string"), nullable=true, example={"https://alpes-hub.s3.amazonaws.com/uploads/public/123.jpg"}),
      * )
      * ),
      * @OA\Response(
@@ -104,9 +105,21 @@ class ListingController extends Controller
     {
         $validated = $request->validated();
 
+        if (isset($validated['optionals'])) {
+            $validated['optionals'] = json_encode($validated['optionals']);
+        }
+
         $listing = Listing::create($validated);
 
-        return response()->json(['success' => true, 'listing' => $listing], 201);
+        if (isset($validated['fotos'])) {
+            collect($validated['fotos'])->map(
+                function ($image) use ($listing) {
+                    $listing->images()->firstOrCreate(['url' => $image]);
+                }
+            );
+        }
+
+        return response()->json(['success' => true, 'listing' => $listing->load(['images' => fn($q) => $q->select(['id', 'listing_id', 'url'])])], 201);
     }
 
     /**
@@ -161,7 +174,7 @@ class ListingController extends Controller
      * @OA\Property(property="version", type="string", nullable=true, example="EXL 2.0"),
      * @OA\Property(property="year_model", type="integer", nullable=true, example=2023),
      * @OA\Property(property="year_build", type="integer", nullable=true, example=2022),
-     * @OA\Property(property="optionals", type="array", @OA\Items(type="string"), nullable=true, example=null),
+     * @OA\Property(property="optionals", type="array", @OA\Items(type="string"), nullable=true, example={"Ar condicionado", "Vidro elétrico"}),
      * @OA\Property(property="doors", type="integer", example=4),
      * @OA\Property(property="board", type="string", example="ABC-1234"),
      * @OA\Property(property="chassi", type="string", nullable=true, example="1234567890ABCDEF"),
@@ -177,6 +190,7 @@ class ListingController extends Controller
      * @OA\Property(property="old_price", type="number", format="float", nullable=true, minimum=0, example=125000.00),
      * @OA\Property(property="color", type="string", example="Preto"),
      * @OA\Property(property="fuel", type="string", example="Gasolina"),
+     * @OA\Property(property="fotos", type="array", @OA\Items(type="string"), nullable=true, example={"https://alpes-hub.s3.amazonaws.com/uploads/public/123.jpg"}),
      * )
      * ),
      * @OA\Response(
@@ -197,9 +211,23 @@ class ListingController extends Controller
     {
         $validated = $request->validated();
 
+        if (isset($validated['optionals'])) {
+            $validated['optionals'] = json_encode($validated['optionals']);
+        }
+
+        $validated['updated'] ??= now();
+
         $listing->update($validated);
 
-        return response()->json(['success' => true, 'listing' => $listing]);
+        if (isset($validated['fotos'])) {
+            collect($validated['fotos'])->map(
+                function ($image) use ($listing) {
+                    $listing->images()->firstOrCreate(['url' => $image]);
+                }
+            );
+        }
+
+        return response()->json(['success' => true, 'listing' => $listing->load(['images' => fn($q) => $q->select(['id', 'listing_id', 'url'])])]);
     }
 
     /**

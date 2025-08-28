@@ -14,9 +14,7 @@
     "paths": {
         "/listings": {
             "get": {
-                "tags": [
-                    "Listings"
-                ],
+                "tags": ["Listings"],
                 "summary": "Listagem paginada de todos os anúncios.",
                 "operationId": "getListingsList",
                 "parameters": [
@@ -44,9 +42,7 @@
                 }
             },
             "post": {
-                "tags": [
-                    "Listings"
-                ],
+                "tags": ["Listings"],
                 "summary": "Cria um novo anúncio.",
                 "operationId": "storeListing",
                 "requestBody": {
@@ -179,6 +175,16 @@
                                     "fuel": {
                                         "type": "string",
                                         "example": "Gasolina"
+                                    },
+                                    "fotos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://alpes-hub.s3.amazonaws.com/uploads/public/123.jpg"
+                                        ],
+                                        "nullable": true
                                     }
                                 },
                                 "type": "object"
@@ -211,9 +217,7 @@
         },
         "/listings/{listing}": {
             "get": {
-                "tags": [
-                    "Listings"
-                ],
+                "tags": ["Listings"],
                 "summary": "Retorna um único anúncio.",
                 "operationId": "getListingById",
                 "parameters": [
@@ -244,9 +248,7 @@
                 }
             },
             "put": {
-                "tags": [
-                    "Listings"
-                ],
+                "tags": ["Listings"],
                 "summary": "Atualiza um anúncio existente.",
                 "operationId": "updateListing",
                 "parameters": [
@@ -299,7 +301,10 @@
                                         "items": {
                                             "type": "string"
                                         },
-                                        "example": null,
+                                        "example": [
+                                            "Ar condicionado",
+                                            "Vidro elétrico"
+                                        ],
                                         "nullable": true
                                     },
                                     "doors": {
@@ -370,6 +375,16 @@
                                     "fuel": {
                                         "type": "string",
                                         "example": "Gasolina"
+                                    },
+                                    "fotos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://alpes-hub.s3.amazonaws.com/uploads/public/123.jpg"
+                                        ],
+                                        "nullable": true
                                     }
                                 },
                                 "type": "object"
@@ -403,9 +418,7 @@
                 }
             },
             "delete": {
-                "tags": [
-                    "Listings"
-                ],
+                "tags": ["Listings"],
                 "summary": "Remove um anúncio.",
                 "operationId": "deleteListing",
                 "parameters": [
